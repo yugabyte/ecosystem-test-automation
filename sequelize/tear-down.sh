@@ -7,7 +7,7 @@ set -e
 
 # Stop the YugabyteDB cluster
 {
-  docker stop yugabyte
-  docker rm yugabyte
+  sudo docker stop yugabyte
+  sudo docker rm yugabyte
 } >> $WORKING_DIR/console.log 2>&1
 
