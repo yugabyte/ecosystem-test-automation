@@ -4,12 +4,13 @@ set -e
 YBDB_IMAGE=
 TOOL_VERSION=
 WORKING_DIR=$HOME/jenkins
-ARTIFACT_PATH=$HOME/jenkins/artifacts
-rm -rf $ARTIFACT_PATH
-mkdir -p $ARTIFACT_PATH
+#ARTIFACT_PATH=$HOME/jenkins/artifacts
 
 CURRENT_DIR=`dirname $0`
 CURRENT_DIR_PATH=`realpath $CURRENT_DIR`
+ARTIFACT_PATH=$CURRENT_DIR_PATH/artifacts
+rm -rf $ARTIFACT_PATH
+mkdir -p $ARTIFACT_PATH
 
 pushd $CURRENT_DIR_PATH
 
