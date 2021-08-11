@@ -10,7 +10,7 @@ docker run -d --name yugabyte  -p7000:7000 -p9000:9000 -p5433:5433 -p9042:9042 \
  --daemon=false
 
 # Allow some time for cluster init
-sleep 5
+sleep 10
 
 # Verify start is clean
 
