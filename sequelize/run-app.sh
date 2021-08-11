@@ -6,7 +6,7 @@ set -e
   git clone https://github.com/yugabyte/orm-examples.git $WORKING_DIR/orm-examples
   pushd $WORKING_DIR/orm-examples/node/sequelize
   npm install
-  docker exec -it yugabyte bin/ysqlsh -c "CREATE DATABASE ysql_sequelize"
+  docker exec -i yugabyte bin/ysqlsh -c "CREATE DATABASE ysql_sequelize"
 } >> $WORKING_DIR/console.log 2>&1
 printf "Cloned orm-examples repo.\n"
 
@@ -51,7 +51,7 @@ printf "REST server stopped.\n"
   rm -rf $WORKING_DIR/sequelize-yugabytedb
   git clone https://github.com/yugabyte/sequelize-yugabytedb.git $WORKING_DIR/sequelize-yugabytedb
   pushd $WORKING_DIR/sequelize-yugabytedb
-  docker exec -it yugabyte bin/ysqlsh -c "CREATE DATABASE test_sequelize"
+  docker exec -i yugabyte bin/ysqlsh -c "CREATE DATABASE test_sequelize"
   npm install 
 } >> $WORKING_DIR/console.log 2>&1
 printf "Cloned sequelize-yugabytedb repo.\n"
