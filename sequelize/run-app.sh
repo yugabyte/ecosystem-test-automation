@@ -3,11 +3,12 @@ set -e
 
 {
   rm -rf $WORKING_DIR/orm-examples
-  git clone git@github.com:yugabyte/orm-examples.git $WORKING_DIR/orm-examples
+  git clone https://github.com/yugabyte/orm-examples.git $WORKING_DIR/orm-examples
   pushd $WORKING_DIR/orm-examples/node/sequelize
   npm install
   docker exec -it yugabyte bin/ysqlsh -c "CREATE DATABASE ysql_sequelize"
 } >> $WORKING_DIR/console.log 2>&1
+printf "Cloned orm-examples repo.\n"
 
 nohup npm start > $ARTIFACT_PATH/sequelize-orm-example-server-report.txt 2>&1 &
 REST_PID=`echo $!`
@@ -40,15 +41,15 @@ printf "REST server stopped.\n"
 
 {
   popd
-  docker stop yugabyte
-  docker rm yugabyte
-  . ./start-ybdb.sh
+#  docker stop yugabyte
+#  docker rm yugabyte
+#  . ./start-ybdb.sh
 } >> $WORKING_DIR/console.log 2>&1
-printf "Restarted YugabyteDB container.\n"
+#printf "Restarted YugabyteDB container.\n"
 
 {
   rm -rf $WORKING_DIR/sequelize-yugabytedb
-  git clone git@github.com:yugabyte/sequelize-yugabytedb.git $WORKING_DIR/sequelize-yugabytedb
+  git clone https://github.com/yugabyte/sequelize-yugabytedb.git $WORKING_DIR/sequelize-yugabytedb
   pushd $WORKING_DIR/sequelize-yugabytedb
   docker exec -it yugabyte bin/ysqlsh -c "CREATE DATABASE test_sequelize"
   npm install 

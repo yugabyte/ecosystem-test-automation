@@ -7,7 +7,7 @@ which docker &> /dev/null
 # Start YugabyteDB
 docker run -d --name yugabyte  -p7000:7000 -p9000:9000 -p5433:5433 -p9042:9042 \
  yugabytedb/yugabyte:latest bin/yugabyted start \
- --daemon=false &> /dev/null
+ --daemon=false >> $WORKING_DIR/console.log 2>&1
 
 # Allow some time for cluster init
 sleep 5
