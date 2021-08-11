@@ -4,13 +4,14 @@ set -e
 YBDB_IMAGE=
 TOOL_VERSION=
 WORKING_DIR=$HOME/jenkins
-ARTIFACT_PATH=$HOME/jenkins/artifacts/`date "+%Y%m%d%H%M%S"`
+ARTIFACT_PATH=$HOME/jenkins/artifacts
+rm -rf $ARTIFACT_PATH
 mkdir -p $ARTIFACT_PATH
 
 CURRENT_DIR=`dirname $0`
 CURRENT_DIR_PATH=`realpath $CURRENT_DIR`
 
-pushd $CURRENT_DIR_PATH &> /dev/null
+pushd $CURRENT_DIR_PATH
 
 # Launch YugabyteDB
 printf "Executing start-ybdb.sh ...\n"
@@ -30,4 +31,4 @@ printf "Executing tear-down.sh ...\n"
 
 printf "Sequelize test run was successful!\n"
 
-popd &> /dev/null
+popd

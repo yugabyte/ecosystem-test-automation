@@ -1,13 +1,13 @@
 #!/bin/bash
 set -e
 
-{
+#{
   rm -rf $WORKING_DIR/orm-examples
   git clone https://github.com/yugabyte/orm-examples.git $WORKING_DIR/orm-examples
   pushd $WORKING_DIR/orm-examples/node/sequelize
   npm install
   docker exec -i yugabyte bin/ysqlsh -c "CREATE DATABASE ysql_sequelize"
-} >> $WORKING_DIR/console.log 2>&1
+#} >> $WORKING_DIR/console.log 2>&1
 printf "Cloned orm-examples repo.\n"
 
 nohup npm start > $ARTIFACT_PATH/sequelize-orm-example-server-report.txt 2>&1 &
@@ -33,34 +33,34 @@ sleep 10
 } >> $ARTIFACT_PATH/sequelize-orm-example-client-report.txt 2>&1
 printf "Created/retrieved records.\n"
 
-grep "Order lines created" $ARTIFACT_PATH/sequelize-orm-example-server-report.txt >> $WORKING_DIR/console.log 2>&1
+grep "Order lines created" $ARTIFACT_PATH/sequelize-orm-example-server-report.txt
 printf "Verified example output.\n"
 
 kill -SIGINT $REST_PID
 printf "REST server stopped.\n"
 
-{
+#{
   popd
 #  docker stop yugabyte
 #  docker rm yugabyte
 #  . ./start-ybdb.sh
-} >> $WORKING_DIR/console.log 2>&1
+#} >> $WORKING_DIR/console.log 2>&1
 #printf "Restarted YugabyteDB container.\n"
 
-{
+#{
   rm -rf $WORKING_DIR/sequelize-yugabytedb
   git clone https://github.com/yugabyte/sequelize-yugabytedb.git $WORKING_DIR/sequelize-yugabytedb
   pushd $WORKING_DIR/sequelize-yugabytedb
   docker exec -i yugabyte bin/ysqlsh -c "CREATE DATABASE test_sequelize"
   npm install 
-} >> $WORKING_DIR/console.log 2>&1
+#} >> $WORKING_DIR/console.log 2>&1
 printf "Cloned sequelize-yugabytedb repo.\n"
 
-npm test &> $ARTIFACT_PATH/sequelize-test-report.log
+npm test &> $ARTIFACT_PATH/sequelize-test-report.txt
 printf "Ran the tests.\n"
 
-grep "5 passing" $ARTIFACT_PATH/sequelize-test-report.log >> $WORKING_DIR/console.log 2>&1
+grep "5 passing" $ARTIFACT_PATH/sequelize-test-report.txt
 printf "Verified test output.\n"
 
-popd >> $WORKING_DIR/console.log 2>&1
+popd
 

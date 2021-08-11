@@ -6,8 +6,8 @@ set -e
 # no-op for sequelize
 
 # Stop the YugabyteDB cluster
-{
+#{
   docker stop yugabyte
   docker rm yugabyte
-} >> $WORKING_DIR/console.log 2>&1
+#} >> $WORKING_DIR/console.log 2>&1
 
