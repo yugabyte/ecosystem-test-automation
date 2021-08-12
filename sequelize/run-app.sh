@@ -59,7 +59,7 @@ printf "Cloned sequelize-yugabytedb repo.\n"
 npm test &> $ARTIFACT_PATH/sequelize-test-report.txt
 printf "Ran the tests.\n"
 
-grep "5 passing" $ARTIFACT_PATH/sequelize-test-report.txt
+! grep "failing" $ARTIFACT_PATH/sequelize-test-report.txt
 printf "Verified test output.\n"
 
 popd
