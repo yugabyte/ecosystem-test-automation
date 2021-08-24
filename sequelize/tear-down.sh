@@ -10,4 +10,4 @@
 #} >> $WORKING_DIR/console.log 2>&1
 
 # More cleanup, as needed
-rm ./process-cleanup.sh
+rm -f ./process-cleanup.sh

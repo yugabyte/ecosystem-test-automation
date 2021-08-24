@@ -20,8 +20,6 @@ set -e
 #} >> $WORKING_DIR/console.log 2>&1
 printf "Cloned orm-examples repo.\n"
 
-read USER_INPUT
-
 nohup ./build-and-run.sh > $ARTIFACT_PATH/gorm-example-server-report.txt 2>&1 &
 REST_PID1=`echo $!`
 REST_PID=`pgrep -P $REST_PID1`

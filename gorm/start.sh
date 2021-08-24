@@ -10,6 +10,7 @@ cd $CURRENT_DIR_PATH
 
 # Start the run
 bash ./do-start.sh
+SUCCESS="$?"
 
 # Tear down the setup
 printf "Executing tear-down.sh ...\n"
@@ -17,3 +18,5 @@ printf "Executing tear-down.sh ...\n"
 
 printf '%s\n' "------------- END gORM run ------------------"
 
+echo "Returning $SUCCESS"
+exit $SUCCESS
