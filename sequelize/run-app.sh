@@ -13,7 +13,16 @@ printf "Cloned orm-examples repo.\n"
 nohup npm start > $ARTIFACT_PATH/sequelize-orm-example-server-report.txt 2>&1 &
 REST_PID=`echo $!`
 printf "REST server setup done. PID: $REST_PID\n"
+echo "kill -9 $REST_PID" >> $CURRENT_DIR_PATH/process-cleanup.sh
 sleep 10
+
+log () {
+  echo ""
+  echo "======================================================" >> $3
+  echo "  $1  " >> $3
+  echo "======================================================" >> $3
+  cat $2 >> $3
+}
 
 {
   curl --data '{ "firstName" : "John", "lastName" : "Smith", "email" : "jsmith@yb.com" }' \
@@ -22,7 +31,7 @@ sleep 10
   curl http://localhost:8080/users
 
   curl \
-    --data '{ "productNiame": "Notebook", "description": "200 page notebook", "price": 7.50 }' \
+    --data '{ "productName": "Notebook", "description": "200 page notebook", "price": 7.50 }' \
     -v -X POST -H 'Content-Type:application/json' http://localhost:8080/products
 
   curl http://localhost:8080/products
@@ -35,6 +44,10 @@ printf "Created/retrieved records.\n"
 
 grep "Order lines created" $ARTIFACT_PATH/sequelize-orm-example-server-report.txt
 printf "Verified example output.\n"
+
+log "Sequelize REST server log" $ARTIFACT_PATH/sequelize-orm-example-server-report.txt $ARTIFACT_PATH/sequelize-example-run-report.txt
+log "Sequelize REST client log" $ARTIFACT_PATH/sequelize-orm-example-client-report.txt $ARTIFACT_PATH/sequelize-example-run-report.txt
+rm $ARTIFACT_PATH/sequelize-orm-example-server-report.txt $ARTIFACT_PATH/sequelize-orm-example-client-report.txt
 
 kill -SIGINT $REST_PID
 printf "REST server stopped.\n"
