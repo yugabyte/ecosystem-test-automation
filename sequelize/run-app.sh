@@ -11,10 +11,15 @@ set -e
 printf "Cloned orm-examples repo.\n"
 
 nohup npm start > $ARTIFACT_PATH/sequelize-orm-example-server-report.txt 2>&1 &
-REST_PID=`echo $!`
-printf "REST server setup done. PID: $REST_PID\n"
-echo "kill -9 $REST_PID" >> $CURRENT_DIR_PATH/process-cleanup.sh
+REST_PID1=`echo $!`
+
 sleep 10
+
+REST_PID=`pgrep -P $REST_PID1`
+printf "REST server setup done. PIDs: $REST_PID1, $REST_PID\n"
+ps -ef | grep $REST_PID1
+echo "kill -9 $REST_PID1" >> $CURRENT_DIR_PATH/process-cleanup.sh
+echo "kill -9 $REST_PID" >> $CURRENT_DIR_PATH/process-cleanup.sh
 
 log () {
   echo ""
