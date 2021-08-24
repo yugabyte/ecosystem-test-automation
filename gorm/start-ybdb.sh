@@ -17,4 +17,4 @@ sleep 10
 # Verify start is clean
 
 # Run init script
-# docker exec -it yugabyte bin/ysqlsh -c "CREATE DATABASE ysql_sequelize"
+# docker exec -it yugabyte bin/ysqlsh -c "CREATE DATABASE ysql_gorm"
