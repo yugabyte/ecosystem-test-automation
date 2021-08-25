@@ -15,11 +15,13 @@ REST_PID1=`echo $!`
 
 sleep 10
 
-REST_PID=`pgrep -P $REST_PID1`
-printf "REST server setup done. PIDs: $REST_PID1, $REST_PID\n"
+REST_PID2=`pgrep -P $REST_PID1`
+REST_PID=`pgrep -P $REST_PID2` || REST_PID=$REST_PID2
+printf "REST server setup done. PIDs: $REST_PID1, $REST_PID2, $REST_PID\n"
 ps -ef | grep $REST_PID1
 ps -ef | grep $REST_PID
 echo "kill -9 $REST_PID1" >> $CURRENT_DIR_PATH/process-cleanup.sh
+echo "kill -9 $REST_PID2" >> $CURRENT_DIR_PATH/process-cleanup.sh
 echo "kill -9 $REST_PID" >> $CURRENT_DIR_PATH/process-cleanup.sh
 
 log () {
