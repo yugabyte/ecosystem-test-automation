@@ -63,8 +63,8 @@ docker cp ./verify.sql yugabyte:/home/yugabyte/verify.sql
 docker exec -i yugabyte ./bin/ysqlsh -f /home/yugabyte/verify.sql | grep "1 row"
 printf "Verified records.\n"
 
-log "gORM REST server log" $ARTIFACT_PATH/gorm-example-server-report.txt $ARTIFACT_PATH/gorm-example-run-report.txt
-log "gORM REST client log" $ARTIFACT_PATH/gorm-example-client-report.txt $ARTIFACT_PATH/gorm-example-run-report.txt
+log "GORM REST server log" $ARTIFACT_PATH/gorm-example-server-report.txt $ARTIFACT_PATH/gorm-example-run-report.txt
+log "GORM REST client log" $ARTIFACT_PATH/gorm-example-client-report.txt $ARTIFACT_PATH/gorm-example-run-report.txt
 rm $ARTIFACT_PATH/gorm-example-server-report.txt $ARTIFACT_PATH/gorm-example-client-report.txt
 
 kill -SIGKILL $REST_PID

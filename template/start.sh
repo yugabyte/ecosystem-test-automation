@@ -1,6 +1,6 @@
 #!/bin/bash
 
-printf '%s\n' "------------- START GORM run ------------------"
+printf '%s\n' "------------- START new_tool run ------------------"
 TOOL_VERSION=
 
 CURRENT_DIR=`dirname $0`
@@ -16,7 +16,7 @@ SUCCESS="$?"
 printf "Executing tear-down.sh ...\n"
 . ./tear-down.sh
 
-printf '%s\n' "------------- END GORM run ------------------"
+printf '%s\n' "------------- END new_tool run ------------------"
 
 echo "Returning $SUCCESS"
 exit $SUCCESS

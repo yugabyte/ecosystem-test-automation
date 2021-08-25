@@ -6,13 +6,15 @@ CURRENT_DIR_PATH=`realpath $CURRENT_DIR`
 
 pushd $CURRENT_DIR_PATH
 
-# Sequelize
+# 1. Sequelize
 YBDB_IMAGE=latest bash ./sequelize/start.sh
 SEQU_RUN=$?
 
-# gORM
+# 2. GORM
 YBDB_IMAGE=latest bash ./gorm/start.sh
 GORM_RUN=$?
+
+# Add your tool's start script above and save its exit code.
 
 popd
 

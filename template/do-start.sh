@@ -19,6 +19,6 @@ printf "Executing start-ybdb.sh ...\n"
 printf "Executing run-app.sh ...\n"
 . ./run-app.sh
 
-printf "GORM test run was successful!\n"
+printf "new_tool test run was successful!\n"
 
 popd
