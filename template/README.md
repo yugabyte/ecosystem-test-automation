@@ -10,10 +10,11 @@
 
   1. [`do-start.sh`](./do-start.sh): It further invokes:
 
-    1.1 [`start-ybdb.sh`](./start-ybdb.sh): Launches the YugabyteDB Docker container.
+      - [`start-ybdb.sh`](./start-ybdb.sh): Launches the YugabyteDB Docker container.
 
-    1.2 [`run-app.sh`](./run-app.sh): Runs the examples/tests for verifying the tool/framework. You
-    can either do this directly on the host or inside a Docker container.
+      - [`run-app.sh`](./run-app.sh): Runs the examples/tests for verifying the tool/framework.
+
+        You can either do this directly on the host or inside a Docker container.
 
   2. [`tear-down.sh`](./tear-down.sh): Cleans up the setup by stopping processes, containers, etc.
 
