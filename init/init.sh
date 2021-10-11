@@ -40,12 +40,13 @@ esac
 
 
 cd $YBDB_CLONE_DIR
-git pull
+git fetch
 
 if [ ! -z "$SHA_COMMIT" ]; then
   git checkout $SHA_COMMIT
   echo "Cloned the commit $SHA_COMMIT"
 else
+  git pull
   echo "Cloned latest master of yugabyte-db repository"
 fi
 
@@ -54,39 +55,41 @@ TAG_SUFFIX=$LATEST
 if [ ! -z ${PHABRICATOR_ID} ]; then
   TAG_SUFFIX=$LATEST-${PHABRICATOR_ID}
 fi
-echo "Tag suffix is $TAG_SUFFIX"
+echo "Tag suffix: $TAG_SUFFIX"
 
-YBDB_IMAGE_PATH=$(docker image list --filter=reference='$YBDB_IMAGE_PREFIX*$TAG_SUFFIX' --format "{{.Repository}}:{{.Tag}}")
+YBDB_IMAGE_PATH=$(docker image list --filter=reference="${YBDB_IMAGE_PREFIX}*${TAG_SUFFIX}" --format "{{.Repository}}:{{.Tag}}")
 if [ ! -z $YBDB_IMAGE_PATH ]; then
   echo "Image built with the given commit exists already: $YB_IMAGE_PATH"
-  return 0
+else
+  echo "Running yb_build.sh ..."
+  ./yb_build.sh --clean
+  echo "Running yb_release ..."
+  ./yb_release > release.log
+
+  # Find and note the path/name of the generated tar.gz file.
+  GENERATED_TAR=$(grep "Generated a package at" release.log | grep -o "/var/lib/jenkins/code/yugabyte-db/build/.*.tar.gz")
+  if [ -z $GENERATED_TAR ]; then
+    echo "Could not generate the yugabyte-db package (.tar.gz) file."
+    # return 1
+  else
+    GENERATED_TAR_NAME=${GENERATED_TAR:40}
+    TAG_VERSION=$(echo $GENERATED_TAR_NAME | awk -F[--] '{print $2}')
+    echo "Tag version: $TAG_VERSION"
+    # rm release.log
+
+    # Build the Docker image.
+    cd ../devops
+    # ./bin/install_python_requirements.sh
+    # ./bin/install_ansible_requirements.sh
+    cd docker/images/yugabyte
+    mkdir -p packages
+    rm -f packages/*
+    cp $GENERATED_TAR packages/yugabyte-$TAG_VERSION-$TAG_SUFFIX-centos-x86_64.tar.gz
+    # Dockerfile is already modified to replace /home/yugabyte with actual path.
+    echo "Building the docker image ..."
+    docker build -t yugabyte/ecosys-yugabyte:$TAG_VERSION-$TAG_SUFFIX .
+
+    YBDB_IMAGE_PATH=yugabyte/ecosys-yugabyte:$TAG_VERSION-$TAG_SUFFIX
+  fi
 fi
-
-# Build and package the product.
-./yb_build.sh --clean
-./yb_release > release.log
-
-# Find and note the path/name of the generated tar.gz file.
-GENERATED_TAR=$(grep "Generated a package at" release.log | grep -o "/var/lib/jenkins/code/yugabyte-db/build/.*.tar.gz")
-if [ -z $GENERATED_TAR ]; then
-  echo "Could not generate the yugabyte-db package (.tar.gz) file."
-  return 1
-fi
-GENERATED_TAR_NAME=${GENERATED_TAR:40}
-TAG_VERSION=$(echo $GENERATED_TAR_NAME | awk -F[--] '{print $2}')
-# rm release.log
-
-# Build the Docker image.
-cd ../devops
-# ./bin/install_python_requirements.sh
-# ./bin/install_ansible_requirements.sh
-cd docker/images/yugabyte
-mkdir -p packages
-rm -f packages/*
-cp $GENERATED_TAR packages/yugabyte-$TAG_VERSION-$TAG_SUFFIX-centos-x86_64.tar.gz
-# Dockerfile is already modified to replace /home/yugabyte with actual path.
-docker build -t yugabyte/ecosys-yugabyte:$TAG_VERSION-$TAG_SUFFIX .
-
-YBDB_IMAGE_PATH=yugabyte/ecosys-yugabyte:$TAG_VERSION-$TAG_SUFFIX
-
 
