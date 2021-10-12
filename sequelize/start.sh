@@ -9,7 +9,7 @@ CURRENT_DIR_PATH=`realpath $CURRENT_DIR`
 cd $CURRENT_DIR_PATH
 
 # Start the run
-YBDB_IMAGE=$YBDB_IMAGE bash ./do-start.sh
+YBDB_IMAGE_PATH=$YBDB_IMAGE_PATH bash ./do-start.sh
 SUCCESS="$?"
 
 # Tear down the setup

@@ -1,14 +1,9 @@
 #!/bin/bash
 set -e
 
-# Check if YBDB_IMAGE is defined. If not set it to a value of your choice.
-if [[ -z $YBDB_IMAGE ]]; then
-  YBDB_IMAGE=latest
-fi
-
 # Start YugabyteDB
 docker run -d --name yugabyte  -p7000:7000 -p9000:9000 -p5433:5433 -p9042:9042 \
- yugabytedb/yugabyte:$YBDB_IMAGE bin/yugabyted start \
+ $YBDB_IMAGE_PATH bin/yugabyted start \
  --daemon=false
 
 # Allow some time for cluster init
