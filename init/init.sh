@@ -29,7 +29,6 @@ case $YBDB_IMAGE in
   ght_*)
     YBDB_IMAGE_PATH=yugabytedb/yugabyte:${YBDB_IMAGE:4}
     echo "Using Docker Hub image $YBDB_IMAGE_PATH ..."
-    # return 0
   ;;
   last_latest)
     LATEST_IMAGE=$(docker image list --filter=reference="${YBDB_IMAGE_PREFIX}latest" --format "{{.Repository}}:{{.Tag}}")
@@ -74,36 +73,46 @@ if [ -z "$YBDB_IMAGE_PATH" ]; then
   else
     echo "Running yb_build.sh ..."
     ./yb_build.sh --clean > yb_build.log 2>&1
-    echo "Running yb_release ..."
-    ./yb_release > release.log 2>&1
-
-    # Find and note the path/name of the generated tar.gz file.
-    GENERATED_TAR=$(grep "Generated a package at" release.log | grep -o "/var/lib/jenkins/code/yugabyte-db/build/.*.tar.gz")
-    if [ -z $GENERATED_TAR ]; then
-      echo "Could not generate the yugabyte-db package (.tar.gz) file."
-      # return 1
+    grep "BUILD SUCCESS" yb_build.log
+    if [ $? -ne 0 ]; then
+      echo "yb_build.sh failed!"
     else
-      GENERATED_TAR_NAME=${GENERATED_TAR:40}
-      TAG_VERSION=$(echo $GENERATED_TAR_NAME | awk -F[--] '{print $2}')
-      echo "Tag version: $TAG_VERSION"
-      # rm release.log
+      echo "Running yb_release ..."
+      ./yb_release > release.log 2>&1
+      # Find and note the path/name of the generated tar.gz file.
+      GENERATED_TAR=$(grep "Generated a package at" release.log | grep -o "/var/lib/jenkins/code/yugabyte-db/build/.*.tar.gz")
+      if [ -z $GENERATED_TAR ]; then
+        echo "Could not generate the yugabyte-db package (.tar.gz) file."
+      else
+        GENERATED_TAR_NAME=${GENERATED_TAR:40}
+        TAG_VERSION=$(echo $GENERATED_TAR_NAME | awk -F[--] '{print $2}')
+        echo "Tag version: $TAG_VERSION"
 
-      # Build the Docker image.
-      cd ../devops
-      # ./bin/install_python_requirements.sh
-      # ./bin/install_ansible_requirements.sh
-      cd docker/images/yugabyte
-      mkdir -p packages
-      rm -f packages/*
-      cp $GENERATED_TAR packages/yugabyte-$TAG_VERSION-$TAG_SUFFIX-centos-x86_64.tar.gz
-      # Dockerfile is already modified to replace /home/yugabyte with actual path.
-      echo "Building the docker image ..."
-      docker build -t ${YBDB_IMAGE_PREFIX}$TAG_VERSION-$TAG_SUFFIX .
-      if [ "${YBDB_IMAGE}" = "latest" ]; then
-        docker image tag ${YBDB_IMAGE_PREFIX}$TAG_VERSION-$TAG_SUFFIX ${YBDB_IMAGE_PREFIX}latest
+        # Build the Docker image.
+        cd ../devops
+        # ./bin/install_python_requirements.sh
+        # ./bin/install_ansible_requirements.sh
+        cd docker/images/yugabyte
+        mkdir -p packages
+        rm -f packages/*
+        cp $GENERATED_TAR packages/yugabyte-$TAG_VERSION-$TAG_SUFFIX-centos-x86_64.tar.gz
+
+        echo "Building the docker image ..."
+        docker build -t ${YBDB_IMAGE_PREFIX}$TAG_VERSION-$TAG_SUFFIX . > ../docker-build.log 2>&1
+
+        # Verify build succeeded.
+        grep "Successfully tagged" ../docker-build.log
+        if [ $? -eq 0 ]; then
+          if [ "${YBDB_IMAGE}" = "latest" ]; then
+            docker image tag ${YBDB_IMAGE_PREFIX}$TAG_VERSION-$TAG_SUFFIX ${YBDB_IMAGE_PREFIX}latest
+          fi
+          docker image prune -f
+
+          YBDB_IMAGE_PATH=${YBDB_IMAGE_PREFIX}$TAG_VERSION-$TAG_SUFFIX
+        else
+          echo "Command 'docker build' failed!"
+        fi
       fi
-
-      YBDB_IMAGE_PATH=${YBDB_IMAGE_PREFIX}$TAG_VERSION-$TAG_SUFFIX
     fi
   fi
 fi
