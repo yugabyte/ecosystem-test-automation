@@ -1,6 +1,8 @@
 #!/bin/bash
 
-YBDB_IMAGE=latest
+if [[ -z "$YBDB_IMAGE" ]]; then
+  YBDB_IMAGE=latest
+fi
 CURRENT_DIR=`dirname $0`
 CURRENT_DIR_PATH=`realpath $CURRENT_DIR`
 
