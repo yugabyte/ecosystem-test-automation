@@ -69,7 +69,7 @@ if [ -z "$YBDB_IMAGE_PATH" ]; then
 
   YBDB_IMAGE_PATH=$(docker image list --filter=reference="${YBDB_IMAGE_PREFIX}*${TAG_SUFFIX}" --format "{{.Repository}}:{{.Tag}}")
   if [ ! -z $YBDB_IMAGE_PATH ]; then
-    echo "Image built with the given commit exists already: $YB_IMAGE_PATH"
+    echo "Image built with the given commit exists already: $YBDB_IMAGE_PATH"
   else
     echo "Running yb_build.sh ..."
     ./yb_build.sh --clean > yb_build.log 2>&1
