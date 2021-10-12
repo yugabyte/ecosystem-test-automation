@@ -48,9 +48,7 @@ case $YBDB_IMAGE in
 esac
 
 
-if [ ! -z $YBDB_IMAGE_PATH ]; then
-  # echo "Using Docker Hub image $YBDB_IMAGE_PATH ..."
-else
+if [ -z "$YBDB_IMAGE_PATH" ]; then
   cd $YBDB_CLONE_DIR
   git fetch
 
