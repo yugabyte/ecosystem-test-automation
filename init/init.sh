@@ -72,6 +72,7 @@ if [ -z "$YBDB_IMAGE_PATH" ]; then
     echo "Image built with the given commit exists already: $YBDB_IMAGE_PATH"
   else
     echo "Running yb_build.sh ..."
+    source ~/.bashrc
     ./yb_build.sh --clean > yb_build.log 2>&1
     grep "BUILD SUCCESS" yb_build.log
     if [ $? -ne 0 ]; then
