@@ -16,7 +16,13 @@ SUCCESS="$?"
 printf "Executing tear-down.sh ...\n"
 . ./tear-down.sh
 
+# Print summary
+echo "Returning $SUCCESS"
+summary="FAIL"
+if [[ "$SUCCESS" == "0" ]]; then
+  summary="PASS"
+fi
+printf '|%+24s |%+24s |\n' "new_tool" $summary >> $HOME/jenkins/summary
 printf '%s\n' "------------- END new_tool run ------------------"
 
-echo "Returning $SUCCESS"
 exit $SUCCESS

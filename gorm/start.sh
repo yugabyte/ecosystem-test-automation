@@ -16,7 +16,12 @@ SUCCESS="$?"
 printf "Executing tear-down.sh ...\n"
 . ./tear-down.sh
 
+echo "Returning $SUCCESS"
+summary="FAIL"
+if [[ "$SUCCESS" == "0" ]]; then
+  summary="PASS"
+fi
+printf '|%+24s |%+24s |\n' "GORM" $summary >> $HOME/jenkins/summary
 printf '%s\n' "------------- END GORM run ------------------"
 
-echo "Returning $SUCCESS"
 exit $SUCCESS

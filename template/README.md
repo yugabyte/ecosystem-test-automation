@@ -14,7 +14,7 @@
 
       - [`run-app.sh`](./run-app.sh): Runs the examples/tests for verifying the tool/framework.
 
-        You can either do this directly on the host or inside a Docker container.
+        Does whatever is required to execute the examples/tests.
 
   2. [`tear-down.sh`](./tear-down.sh): Cleans up the setup by stopping processes, containers, etc.
 

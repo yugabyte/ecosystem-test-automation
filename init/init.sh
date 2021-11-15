@@ -49,14 +49,14 @@ esac
 
 if [ -z "$YBDB_IMAGE_PATH" ]; then
   cd $YBDB_CLONE_DIR
-  git fetch
+  git fetch > /dev/null
 
   if [ ! -z "$SHA_COMMIT" ]; then
     git checkout $SHA_COMMIT
     echo "Cloned the commit $SHA_COMMIT"
   else
     git checkout master
-    git pull
+    git pull > /dev/null
     echo "Cloned latest master of yugabyte-db repository"
   fi
 

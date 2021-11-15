@@ -1,17 +1,20 @@
 #!/bin/bash
 
+rm -f $HOME/jenkins/summary
 if [[ -z "$YBDB_IMAGE" ]]; then
   YBDB_IMAGE=latest
 fi
 CURRENT_DIR=`dirname $0`
 CURRENT_DIR_PATH=`realpath $CURRENT_DIR`
 
+DOCKER_BUILD_RUN=0
+dockerrun="PASS"
 . ./init/init.sh
 
 if [[ -z "$YBDB_IMAGE_PATH" ]]; then
-  echo "WARNING!"
-  echo "WARNING! No image was built/identified. Using the default one."
-  echo "WARNING!"
+  echo "WARNING! No Docker image was built/identified. Using the default one."
+  DOCKER_BUILD_RUN=1
+  dockerrun="FAIL"
   YBDB_IMAGE_PATH=yugabytedb/yugabyte:latest
 fi
 
@@ -29,5 +32,11 @@ GORM_RUN=$?
 
 popd
 
-EXIT_CODE=`expr $SEQU_RUN + $GORM_RUN`
+echo "----------------------------------------------------"
+echo "                   S U M M A R Y                    "
+echo "----------------------------------------------------"
+printf '|%+24s |%+24s |\n' "Docker Build" $dockerrun
+cat $HOME/jenkins/summary
+
+EXIT_CODE=`expr $SEQU_RUN + $GORM_RUN + $DOCKER_BUILD_RUN`
 exit $EXIT_CODE
