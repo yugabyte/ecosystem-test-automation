@@ -33,10 +33,11 @@ GORM_RUN=$?
 popd
 
 echo "----------------------------------------------------"
-echo "                   S U M M A R Y                    "
+echo "|                  S U M M A R Y                   |"
 echo "----------------------------------------------------"
 printf '|%+24s |%+24s |\n' "Docker Build" $dockerrun
 cat $HOME/jenkins/summary
+echo "----------------------------------------------------"
 
 EXIT_CODE=`expr $SEQU_RUN + $GORM_RUN + $DOCKER_BUILD_RUN`
 exit $EXIT_CODE
