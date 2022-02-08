@@ -96,7 +96,7 @@ if [ -z "$YBDB_IMAGE_PATH" ]; then
         cd docker/images/yugabyte
         mkdir -p packages
         rm -f packages/*
-        cp $GENERATED_TAR packages/yugabyte-$TAG_VERSION-$TAG_SUFFIX-centos-x86_64.tar.gz
+        mv $GENERATED_TAR packages/yugabyte-$TAG_VERSION-$TAG_SUFFIX-centos-x86_64.tar.gz
 
         echo "Building the docker image ..."
         docker build -t ${YBDB_IMAGE_PREFIX}$TAG_VERSION-$TAG_SUFFIX . > ../docker-build.log 2>&1
