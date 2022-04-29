@@ -29,7 +29,7 @@ YBDB_IMAGE_PATH=$YBDB_IMAGE_PATH bash ./gorm/start.sh
 GORM_RUN=$?
 
 # 3. hashicorp vault plugin
-bash ./ysql-plugin-test.sh
+YBDB_IMAGE=$YBDB_IMAGE bash ./hashicorp-vault-dynamic-secret-ysql-plugin/start.sh
 VAULT_RUN=$?
 
 # Add your tool's start script above and save its exit code.
