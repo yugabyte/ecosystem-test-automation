@@ -28,6 +28,10 @@ SEQU_RUN=$?
 YBDB_IMAGE_PATH=$YBDB_IMAGE_PATH bash ./gorm/start.sh
 GORM_RUN=$?
 
+# 3. GOCQL
+YBDB_IMAGE_PATH=$YBDB_IMAGE_PATH bash ./gocql/start.sh
+GOCQL_RUN=$?
+
 # Add your tool's start script above and save its exit code.
 
 popd
