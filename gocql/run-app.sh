@@ -23,3 +23,4 @@ sleep 10
 grep "ok" $ARTIFACT_PATH/gocql-TestGetKey-output.txt
 printf "Verified example output.\n"
 
+popd
