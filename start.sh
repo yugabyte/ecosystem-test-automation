@@ -28,6 +28,10 @@ SEQU_RUN=$?
 YBDB_IMAGE_PATH=$YBDB_IMAGE_PATH bash ./gorm/start.sh
 GORM_RUN=$?
 
+# 3. GOCQL
+YBDB_IMAGE_PATH=$YBDB_IMAGE_PATH bash ./gocql/start.sh
+GOCQL_RUN=$?
+
 # Add your tool's start script above and save its exit code.
 
 popd
@@ -39,5 +43,5 @@ printf '|%+24s |%+24s |\n' "Docker Build" $dockerrun
 cat $HOME/jenkins/summary
 echo "----------------------------------------------------"
 
-EXIT_CODE=`expr $SEQU_RUN + $GORM_RUN + $DOCKER_BUILD_RUN`
+EXIT_CODE=`expr $SEQU_RUN + $GORM_RUN + $GOCQL_RUN + $DOCKER_BUILD_RUN`
 exit $EXIT_CODE
