@@ -2,7 +2,7 @@
 set -e
 
 rm -rf $WORKING_DIR/gocql
-git clone git@github.com:yugabyte/gocql.git -b partition_aware_policy $WORKING_DIR/gocql
+git clone git@github.com:yugabyte/gocql.git $WORKING_DIR/gocql
 pushd $WORKING_DIR/gocql
 printf "Cloned gocql repo.\n"
 
