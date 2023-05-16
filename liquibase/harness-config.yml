@@ -3,7 +3,7 @@ context: testContext
 
 databasesUnderTest:
   - name: yugabytedb
-    version: 2.16
+    version: ${YUGABYTE_RELEASE_NUMBER}
     url: jdbc:postgresql://localhost:5433/lbcat
     username: yugabyte
     password: yugabyte

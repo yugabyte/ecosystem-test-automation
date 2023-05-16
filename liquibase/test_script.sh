@@ -1,6 +1,7 @@
 echo "Cloning the liquibase extension repository"
 
 git clone git@github.com:liquibase/liquibase-yugabytedb.git && cd liquibase-yugabytedb
+$YUGABYTE_HOME_DIRECTORY/bin/ysqlsh -f ./src/test/resources/docker/yugabytedb-init.sql
 
 echo "Editing the config file"
 
