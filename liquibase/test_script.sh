@@ -5,7 +5,7 @@ $YUGABYTE_HOME_DIRECTORY/bin/ysqlsh -f ./src/test/resources/docker/yugabytedb-in
 
 echo "Editing the config file"
 
-rm src/test/resources/harness-config.yml && cp ../harness-config.yml src/test/resources
+rm src/test/resources/harness-config.yml && cp $INTEGRATIONS_HOME_DIRECTORY/liquibase/harness-config.yml src/test/resources
 
 echo "Running tests"
 
