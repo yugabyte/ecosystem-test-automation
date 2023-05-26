@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 echo "Cloning the liquibase extension repository"
 
 git clone git@github.com:liquibase/liquibase-yugabytedb.git && cd liquibase-yugabytedb
@@ -10,8 +13,6 @@ rm src/test/resources/harness-config.yml && cp $INTEGRATIONS_HOME_DIRECTORY/liqu
 echo "Running tests"
 
 mvn clean install
-mvn -ntp -Dtest=FoundationalExtensionHarnessSuite test
+mvn -ntp -Dtest=FoundationalExtensionHarnessSuite test > $ARTIFACTS_PATH/liquibasefoundationaltest.txt
 
-echo "Cleanup"
-
-cd ../ && rm -rf liquibase-yugabytedb
+! grep "BUILD FAILURE"
