@@ -3,6 +3,11 @@
 printf '%s\n' "------------- START new_tool run ------------------"
 TOOL_VERSION=
 
+CURRENT_DIR=`dirname $0`
+CURRENT_DIR_PATH=`realpath $CURRENT_DIR`
+
+cd $CURRENT_DIR_PATH
+
 ./do-start.sh
 SUCCESS="$?"
 
@@ -18,5 +23,7 @@ if [[ "$SUCCESS" == "0" ]]; then
 fi
 printf '%s\n' $summary
 printf '%s\n' "------------- END new_tool run ------------------"
+
+cd ..
 
 exit $SUCCESS
