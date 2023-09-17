@@ -15,4 +15,4 @@ echo "Running tests"
 mvn clean install
 mvn -ntp -Dtest=FoundationalExtensionHarnessSuite test > $ARTIFACTS_PATH/liquibasefoundationaltest.txt
 
-! grep "BUILD FAILURE"
+! grep "BUILD FAILURE" $ARTIFACTS_PATH/liquibasefoundationaltest.txt

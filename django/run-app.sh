@@ -1,3 +1,5 @@
+set -e
+
 python3 -m venv $WORKSPACE/environments/django-test
 
 source $WORKSPACE/environments/django-test/bin/activate
@@ -73,7 +75,4 @@ do
    python3 runtests.py --settings=test_yugabyte -v 3 $DJANGO_TEST_APP --noinput || EXIT_STATUS=$?
 done
 
-deactivate
-rm -rf $WORKSPACE/environments/django-test
-rm -rf $WORKSPACE/yb-django
-rm -rf $WORKSPACE/$DJANGO_TESTS_DIR
+exit $EXIT_STATUS
