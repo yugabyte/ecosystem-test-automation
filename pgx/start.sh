@@ -22,7 +22,7 @@ if [[ "$SUCCESS" == "0" ]]; then
   summary="PASS"
 fi
 printf '%s\n' $summary
-printf '%s\n' "------------- END gocql run ------------------"
+printf '%s\n' "------------- END pgx run ------------------"
 
 cd ..
 
