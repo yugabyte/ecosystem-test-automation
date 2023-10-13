@@ -1,7 +1,4 @@
 #!/bin/bash
 
-# Stop the YugabyteDB cluster
-#{
-  docker stop yugabyte
-  docker rm yugabyte
-#} >> $WORKING_DIR/console.log 2>&1
+# Destroy YugabyteDB cluster
+$YUGABYTE_HOME_DIRECTORY/bin/yb-ctl destroy

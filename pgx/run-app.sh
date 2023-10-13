@@ -1,15 +1,6 @@
 #!/bin/bash
 set -e
 
-echo "Installing Golang 1.20.8"
-sudo rm -rvf /usr/local/go/
-sudo wget https://go.dev/dl/go1.20.8.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.20.8.linux-amd64.tar.gz
-sudo chown -R root:root /usr/local/go
-mkdir -p $HOME/go/{bin,src}
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:/usr/local/go/bin:$PATH
-
 echo "Cloning the driver examples repository"
 
 git clone git@github.com:yugabyte/driver-examples.git && cd driver-examples/go/pgx

@@ -1,20 +1,17 @@
 #!/bin/bash
 set -e
 
-rm -rf $WORKING_DIR/gocql
-git clone git@github.com:yugabyte/gocql.git $WORKING_DIR/gocql
-pushd $WORKING_DIR/gocql
-printf "Cloned gocql repo.\n"
+echo "Cloning the gocql repository"
+git clone git@github.com:yugabyte/gocql.git
+cd gocql
+
+echo "Running tests"
 
 go clean -testcache
 
-go test -timeout 30s -run ^TestGetKey$ github.com/yugabyte/gocql > $ARTIFACT_PATH/gocql-TestGetKey-output.txt
-REST_PID2=`echo $!`
+go test -v > $ARTIFACT_PATH/gocql-TestGetKey-output.txt
 
 # Allow some time for server init
 sleep 10
 
-grep -P "ok[ \t]+github.com" $ARTIFACT_PATH/gocql-TestGetKey-output.txt
-printf "Verified example output.\n"
-
-popd
+! grep "FAIL" $ARTIFACT_PATH/gocql-TestGetKey-output.txt
