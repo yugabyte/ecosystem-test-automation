@@ -8,8 +8,6 @@ export DJANGO_TEST_APPS="absolute_url_overrides admin_autodiscover admin_checks 
 
 set -x pipefail
 
-sudo yum update -y
-sudo yum install -y libmemcached-dev
 
 # Disable buffering, so that the logs stream through.
 export PYTHONUNBUFFERED=1
@@ -27,9 +25,6 @@ cd ..
 
 git clone https://github.com/django/django.git --branch $DJANGO_BRANCH $DJANGO_TESTS_DIR/django
 
-# Install dependencies for Django tests.
-sudo yum update
-sudo yum install -y libffi-dev libjpeg-dev zlib1g-devel
 
 cd $DJANGO_TESTS_DIR/django 
 pip3 install -e . 
