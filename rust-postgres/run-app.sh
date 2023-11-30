@@ -4,7 +4,7 @@ set -e
 echo "Cloning the driver examples repository"
 
 git clone git@github.com:yugabyte/driver-examples.git -b rustexample
-cd driver-examples/rust/rust_ysql_driver_examples
+cd driver-examples/rust/rust_ysql
 
 echo "Building the example"
 
