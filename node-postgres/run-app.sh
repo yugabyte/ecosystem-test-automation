@@ -1,12 +1,6 @@
 #!/bin/bash
 set -e
 
-CURRENT_DIR=`dirname $0`
-ARTIFACTS_PATH=`realpath $CURRENT_DIR`
-YUGABYTE_HOME_DIRECTORY=/home/ec2-user/code/yugabyte-binary/yugabyte-2.19.0.0
-echo $YUGABYTE_HOME_DIRECTORY
-echo $ARTIFACTS_PATH
-
 echo "Installing node-postgres smart driver package"
 
 npm install @yugabytedb/pg
