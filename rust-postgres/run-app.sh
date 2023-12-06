@@ -5,7 +5,7 @@ DIR="driver-examples"
 if [ -d "$DIR" ]; then
  echo "driver-examples repository is already present"
  cd driver-examples
- git checkout master
+ git checkout main
  git pull
 else
  echo "Cloning the driver examples repository"
