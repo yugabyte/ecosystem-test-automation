@@ -1,18 +1,8 @@
 #!/bin/bash
 set -e
 
-DIR="driver-examples"
-if [ -d "$DIR" ]; then
- echo "driver-examples repository already clonned"
- cd driver-examples
- git checkout master
- git pull
-else
- echo "Cloning the driver examples repository"
- git clone git@github.com:yugabyte/driver-examples.git
- cd driver-examples
-fi
-
+echo "Cloning the gocql repository"
+git clone git@github.com:yugabyte/gocql.git
 cd gocql
 
 echo "Running tests"
