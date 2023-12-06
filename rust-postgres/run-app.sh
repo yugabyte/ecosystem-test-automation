@@ -1,10 +1,19 @@
 #!/bin/bash
 set -e
 
-echo "Cloning the driver examples repository"
+DIR="driver-examples"
+if [ -d "$DIR" ]; then
+ echo "driver-examples repository already clonned"
+ cd driver-examples
+ git checkout master
+ git pull
+else
+ echo "Cloning the driver examples repository"
+ git clone git@github.com:yugabyte/driver-examples.git
+ cd driver-examples
+fi
 
-git clone git@github.com:yugabyte/driver-examples.git
-cd driver-examples/rust/rust_ysql
+cd rust/rust_ysql
 
 echo "Building the example"
 
