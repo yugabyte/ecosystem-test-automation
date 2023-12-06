@@ -11,7 +11,7 @@ npm install @yugabytedb/pg-pool
 
 DIR="driver-examples"
 if [ -d "$DIR" ]; then
- echo "driver-examples repository already clonned"
+ echo "driver-examples repository is already present"
  cd driver-examples
  git checkout master
  git pull
