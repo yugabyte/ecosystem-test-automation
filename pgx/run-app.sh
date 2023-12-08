@@ -14,6 +14,8 @@ else
 fi
 
 cd go/pgx
+rm -f go.mod
+rm -f go.sum
 go mod init main
 go mod tidy
 
