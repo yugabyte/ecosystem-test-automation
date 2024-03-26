@@ -21,7 +21,7 @@ go mod tidy
 
 echo "Building the example"
 
-go build ybsql_load_balance.go ybsql_load_balance_pool.go ybsql_fallback.go
+go build ybsql_load_balance.go ybsql_load_balance_pool.go ybsql_fallback.go performance_test_parallel.go performace_test_sequential.go
 
 echo "Running tests"
 
@@ -35,6 +35,10 @@ echo "Running tests"
 
 ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY --fallbackTest 3 > $ARTIFACTS_PATH/pgx_fallback3.txt
 
+./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY --perfTest > $ARTIFACTS_PATH/pgx_singlethreadperftest.txt
+
+./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY --perfTestMultiThread > $ARTIFACTS_PATH/pgx_multithreadperftest.txt
+
 grep "Closing the application ..." $ARTIFACTS_PATH/pgx_connect.txt
 
 grep "Closing the application ..." $ARTIFACTS_PATH/pgxpool_connect.txt
@@ -44,3 +48,7 @@ grep "End of checkNodeDownBehaviorMultiFallback() ..." $ARTIFACTS_PATH/pgx_fallb
 grep "End of checkMultiNodeDown() ..." $ARTIFACTS_PATH/pgx_fallback2.txt
 
 grep "End of checkNodeDownPrimary() ..." $ARTIFACTS_PATH/pgx_fallback3.txt
+
+grep "End of perfTestSingleThread() ..." $ARTIFACTS_PATH/pgx_singlethreadperftest.txt
+
+grep "End of perfTestMultiThreaded() ..." $ARTIFACTS_PATH/pgx_multithreadperftest.txt
