@@ -41,6 +41,7 @@ cd python-psycopg2/
 python3 -m venv $WORKSPACE/environments/psycopg2-test
 source $WORKSPACE/environments/psycopg2-test/bin/activate
 pip install psycopg2-yugabytedb
+pip install psutil
 
 export YB_PATH=$YUGABYTE_HOME_DIRECTORY
 
