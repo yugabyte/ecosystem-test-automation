@@ -22,7 +22,7 @@ mkdir -p $DJANGO_TESTS_DIR
 git clone git@github.com:yugabyte/yb-django.git
 
 cd yb-django
-
+pip3 install --upgrade pip
 pip3 install -r requirements.txt
 pip3 install -e .
 cd ..
@@ -31,7 +31,7 @@ git clone https://github.com/django/django.git --branch $DJANGO_BRANCH $DJANGO_T
 
 
 cd $DJANGO_TESTS_DIR/django 
-pip3 install . 
+pip3 install -e . 
 pip3 install -r tests/requirements/py3.txt; cd ../../
 
 create_settings() {
