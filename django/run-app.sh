@@ -22,7 +22,7 @@ mkdir -p $DJANGO_TESTS_DIR
 git clone git@github.com:yugabyte/yb-django.git
 
 cd yb-django
-
+pip3 install --upgrade pip
 pip3 install -r requirements.txt
 pip3 install -e .
 cd ..
