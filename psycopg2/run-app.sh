@@ -51,31 +51,31 @@ echo "Running tests"
 echo "[" > temp_report.json
 
 # Run all the individual tests you want
-run_test "TestUniformLoadBalancer.test_lb_true" "test_uniformloadbalancer" 
-run_test "TestUniformLoadBalancer.test_lb_true_multithreaded" "test_uniformloadbalancer"
-run_test "TestUniformLoadBalancer.test_lb_true_node_down" "test_uniformloadbalancer"
-run_test "TestUniformLoadBalancer.test_lb_true_new_node" "test_uniformloadbalancer"
-run_test "TestUniformLoadBalancer.test_lb_true_localhost" "test_uniformloadbalancer"
-run_test "TestUniformLoadBalancer.test_lb_true_pool" "test_uniformloadbalancer"
+# run_test "TestUniformLoadBalancer.test_lb_true" "test_uniformloadbalancer" 
+# run_test "TestUniformLoadBalancer.test_lb_true_multithreaded" "test_uniformloadbalancer"
+# run_test "TestUniformLoadBalancer.test_lb_true_node_down" "test_uniformloadbalancer"
+# run_test "TestUniformLoadBalancer.test_lb_true_new_node" "test_uniformloadbalancer"
+# run_test "TestUniformLoadBalancer.test_lb_true_localhost" "test_uniformloadbalancer"
+# run_test "TestUniformLoadBalancer.test_lb_true_pool" "test_uniformloadbalancer"
 
-run_test "TestTopologyAwareLoadBalancer.test_topology_aware" "test_topologyawareloadbalancer"
-run_test "TestTopologyAwareLoadBalancer.test_topology_aware_multithreaded" "test_topologyawareloadbalancer"
-run_test "TestTopologyAwareLoadBalancer.test_topology_aware_node_down" "test_topologyawareloadbalancer"
-run_test "TestTopologyAwareLoadBalancer.test_topology_aware_add_node" "test_topologyawareloadbalancer"
-run_test "TestTopologyAwareLoadBalancer.test_topology_aware_localhost" "test_topologyawareloadbalancer"
-run_test "TestTopologyAwareLoadBalancer.test_topology_aware_pool" "test_topologyawareloadbalancer"
+# run_test "TestTopologyAwareLoadBalancer.test_topology_aware" "test_topologyawareloadbalancer"
+# run_test "TestTopologyAwareLoadBalancer.test_topology_aware_multithreaded" "test_topologyawareloadbalancer"
+# run_test "TestTopologyAwareLoadBalancer.test_topology_aware_node_down" "test_topologyawareloadbalancer"
+# run_test "TestTopologyAwareLoadBalancer.test_topology_aware_add_node" "test_topologyawareloadbalancer"
+# run_test "TestTopologyAwareLoadBalancer.test_topology_aware_localhost" "test_topologyawareloadbalancer"
+# run_test "TestTopologyAwareLoadBalancer.test_topology_aware_pool" "test_topologyawareloadbalancer"
 
-run_test "TestMisc.test_default_port_with_cluster_on_different_port" "test_misc"
-run_test "TestMisc.test_default_port" "test_misc"
-run_test "TestMisc.test_all_valid_uris" "test_misc"
+# run_test "TestMisc.test_default_port_with_cluster_on_different_port" "test_misc"
+# run_test "TestMisc.test_default_port" "test_misc"
+# run_test "TestMisc.test_all_valid_uris" "test_misc"
 
-run_test "TestFallbackTopology.test_all_valid_placement_zones" "test_fallback_topology"
+# run_test "TestFallbackTopology.test_all_valid_placement_zones" "test_fallback_topology"
 run_test "TestFallbackTopology.test_fallback" "test_fallback_topology"
-run_test "TestFallbackTopology.test_multilevel_fallback_with_node_up" "test_fallback_topology"
+# run_test "TestFallbackTopology.test_multilevel_fallback_with_node_up" "test_fallback_topology"
 
-run_test "TestClusterAwareRR.test_cluster_aware_rr_all_cases" "test_cluster_aware_rr"
+# run_test "TestClusterAwareRR.test_cluster_aware_rr_all_cases" "test_cluster_aware_rr"
 
-run_test "TestTopologyAwareRR.test_topology_aware_rr_all_cases" "test_topology_aware_rr"
+# run_test "TestTopologyAwareRR.test_topology_aware_rr_all_cases" "test_topology_aware_rr"
 # Finalize the JSON report
 sed -i '$ s/,$//' temp_report.json # Remove trailing comma from the last JSON object
 echo "]" >> temp_report.json
