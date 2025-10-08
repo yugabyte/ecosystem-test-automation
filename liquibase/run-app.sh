@@ -14,7 +14,6 @@ rm src/test/resources/harness-config.yml && cp $INTEGRATIONS_HOME_DIRECTORY/liqu
 sed -i 's@${YUGABYTE_RELEASE_NUMBER}@'"$YUGABYTE_RELEASE_NUMBER"'@' src/test/resources/harness-config.yml
 
 echo "Building the Liquibase tests"
-ls /usr/lib/jvm
 JAVA_HOME=/usr/lib/jvm/zulu-17.jdk mvn -ntp -q clean install
 
 # Function to run individual test cases and capture their results
