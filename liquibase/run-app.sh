@@ -14,7 +14,7 @@ rm src/test/resources/harness-config.yml && cp $INTEGRATIONS_HOME_DIRECTORY/liqu
 sed -i 's@${YUGABYTE_RELEASE_NUMBER}@'"$YUGABYTE_RELEASE_NUMBER"'@' src/test/resources/harness-config.yml
 
 echo "Building the Liquibase tests"
-JAVA_HOME=/usr/lib/jvm/zulu-11.jdk mvn -ntp -q clean install
+JAVA_HOME=/usr/lib/jvm/zulu-17.jdk mvn -ntp -q clean install
 
 # Function to run individual test cases and capture their results
 run_test() {
@@ -29,7 +29,7 @@ run_test() {
     fi
 
     # Run the specific test case and capture errors
-    JAVA_HOME=/usr/lib/jvm/zulu-11.jdk mvn -ntp ${test_name} test 2>&1 | tee ${tc_name}.log
+    JAVA_HOME=/usr/lib/jvm/zulu-17.jdk mvn -ntp ${test_name} test 2>&1 | tee ${tc_name}.log
     
     if ! grep "BUILD SUCCESS" ${tc_name}.log; then
       # Get the lines between 'FAILURE!' and 'BUILD FAILURE' which is the stack trace
