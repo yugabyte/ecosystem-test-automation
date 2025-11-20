@@ -81,6 +81,10 @@ run_test " " "basic" "Closing the application ..." "pgx/start.sh"
 
 cd ../../..
 
+# Launch YugabyteDB
+echo "Executing start-ybdb.sh ...\n"
+./start-ybdb.sh
+
 if [ -d "$DIR2" ]; then
  echo "pgx repository is already present"
  cd pgx
@@ -91,10 +95,6 @@ else
  git clone git@github.com:yugabyte/pgx.git
  cd pgx
 fi
-
-# Launch YugabyteDB
-echo "Executing start-ybdb.sh ...\n"
-./start-ybdb.sh
 
 echo "Running upstream tests"
 
