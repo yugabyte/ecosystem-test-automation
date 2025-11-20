@@ -79,7 +79,7 @@ echo "[" > temp_report.json
 
 run_test "rr" "topologyAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
-cd ..
+cd ../../..
 
 if [ -d "$DIR2" ]; then
  echo "pgx repository is already present"
