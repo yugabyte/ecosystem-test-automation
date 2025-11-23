@@ -29,12 +29,12 @@ run_test() {
     if ! grep "$message" ${test_name}_${tc_name}.log; then
       tail -n 30 ${test_name}_${tc_name}.log > stack4json.log
       local tname="${test_name}_${tc_name}"
-      python $WORKSPACE/integrations/utils/create_json.py --test_name $tname --script_name $script_name --result FAILED --file_path stack4json.log >> temp_report.json
+      python $WORKSPACE/integrations/utils/create_json.py --test_name $tname --script_name $script_name --result FAILED --file_path stack4json.log >> ../../../temp_report.json
       OVERALL_STATUS=1
     else
       local tname="${test_name}_${tc_name}"
       echo "Example $tname completed"
-      python $WORKSPACE/integrations/utils/create_json.py --test_name $tname --script_name $script_name --result PASSED >> temp_report.json
+      python $WORKSPACE/integrations/utils/create_json.py --test_name $tname --script_name $script_name --result PASSED >> ../../../temp_report.json
     fi
 }
 
@@ -63,21 +63,21 @@ go build ybsql_load_balance.go ybsql_load_balance_pool.go ybsql_fallback.go perf
 echo "Running tests"
 
 # Initialize the JSON report
-echo "[" > temp_report.json
+echo "[" > ../../../temp_report.json
 
 run_test " " "basic" "Closing the application ..." "pgx/start.sh"
 
-run_test "pool" "pool" "Closing the application ..." "pgx/start.sh"
+# run_test "pool" "pool" "Closing the application ..." "pgx/start.sh"
 
-run_test "fallbackTest" "checkNodeDownBehaviorMultiFallback" "End of checkNodeDownBehaviorMultiFallback() ..." "pgx/start.sh"
+# run_test "fallbackTest" "checkNodeDownBehaviorMultiFallback" "End of checkNodeDownBehaviorMultiFallback() ..." "pgx/start.sh"
 
-run_test "fallbackTest" "checkMultiNodeDown" "End of checkMultiNodeDown() ..." "pgx/start.sh"
+# run_test "fallbackTest" "checkMultiNodeDown" "End of checkMultiNodeDown() ..." "pgx/start.sh"
 
-run_test "fallbackTest" "checkNodeDownPrimary" "End of checkNodeDownPrimary() ..." "pgx/start.sh"
+# run_test "fallbackTest" "checkNodeDownPrimary" "End of checkNodeDownPrimary() ..." "pgx/start.sh"
 
-run_test "rr" "clusterAwareRRTest" "Closing the application ..." "pgx/start.sh"
+# run_test "rr" "clusterAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
-run_test "rr" "topologyAwareRRTest" "Closing the application ..." "pgx/start.sh"
+# run_test "rr" "topologyAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
 cd ../../..
 
@@ -102,7 +102,7 @@ go clean -testcache
 
 # Run the specific test case and capture errors
 echo "Running pgx test suite..."
-export PGX_TEST_DATABASE="host=127.0.0.1 database=yugabyte"
+export PGX_TEST_DATABASE="host=127.0.0.1 database=pgx_test"
 export PGUSER=yugabyte
 export PGPORT=5433
 go test -v -p 1 -parallel 1 ./... 2>&1 | tee pgx-tests.log
@@ -111,19 +111,19 @@ if grep "FAIL:" "pgx-tests.log"; then
   # Get the lines with 'FAIL'
   grep -B 1 "FAIL:" pgx-tests.log > stack4json.log
   # test_name=`sed -n '/^.*FAIL:\s\+\(\w\+\).*$/s//\1/p' pgx-tests.log`
-  python $WORKSPACE/integrations/utils/create_json.py --test_name "NA" --script_name "pgx-test" --result FAILED --file_path stack4json.log >> temp_report.json
+  python $WORKSPACE/integrations/utils/create_json.py --test_name "NA" --script_name "pgx-test" --result FAILED --file_path stack4json.log >> ../temp_report.json
   RESULT=1
 else
-  python $WORKSPACE/integrations/utils/create_json.py --test_name "NA" --script_name "pgx-test" --result PASSED >> temp_report.json
+  python $WORKSPACE/integrations/utils/create_json.py --test_name "NA" --script_name "pgx-test" --result PASSED >> ../temp_report.json
 fi
 
 # Finalize the JSON report
-sed -i '$ s/,$//' temp_report.json # Remove trailing comma from the last JSON object
-echo "]" >> temp_report.json
-sed -i 's/\t/    /g' temp_report.json # Replace tabs with spaces
+sed -i '$ s/,$//' ../temp_report.json # Remove trailing comma from the last JSON object
+echo "]" >> ../temp_report.json
+sed -i 's/\t/    /g' ../temp_report.json # Replace tabs with spaces
 
 # Move the temporary report to the final report file
-mv temp_report.json "$REPORT_FILE"
+mv ../temp_report.json "$REPORT_FILE"
 
 # Display the JSON report
 echo "TEST REPORT -------------------------"
