@@ -28,7 +28,7 @@ run_test() {
     # Run the specific test case and capture errors
     local tname="com.yugabyte.${test_name/./#}"
     echo "Running ${tname}..."
-    mvn test -Dtest=${tname} 2>&1 | tee ${test_name}.log
+    mvn test -Dtest=${tname} --no-transfer-progress 2>&1 | tee ${test_name}.log
     if ! grep "BUILD SUCCESS" ${test_name}.log; then
       # Get the lines between 'FAILURE!' and 'BUILD FAILURE' which is the stack trace
       sed -n '/FAILURE!/,/BUILD FAILURE/{/FAILURE!/b;/BUILD FAILURE/b;p}' ${test_name}.log > stack4json.log
