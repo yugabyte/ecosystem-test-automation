@@ -67,17 +67,17 @@ echo "[" > ../../../temp_report.json
 
 run_test " " "basic" "Closing the application ..." "pgx/start.sh"
 
-# run_test "pool" "pool" "Closing the application ..." "pgx/start.sh"
+run_test "pool" "pool" "Closing the application ..." "pgx/start.sh"
 
-# run_test "fallbackTest" "checkNodeDownBehaviorMultiFallback" "End of checkNodeDownBehaviorMultiFallback() ..." "pgx/start.sh"
+run_test "fallbackTest" "checkNodeDownBehaviorMultiFallback" "End of checkNodeDownBehaviorMultiFallback() ..." "pgx/start.sh"
 
-# run_test "fallbackTest" "checkMultiNodeDown" "End of checkMultiNodeDown() ..." "pgx/start.sh"
+run_test "fallbackTest" "checkMultiNodeDown" "End of checkMultiNodeDown() ..." "pgx/start.sh"
 
-# run_test "fallbackTest" "checkNodeDownPrimary" "End of checkNodeDownPrimary() ..." "pgx/start.sh"
+run_test "fallbackTest" "checkNodeDownPrimary" "End of checkNodeDownPrimary() ..." "pgx/start.sh"
 
-# run_test "rr" "clusterAwareRRTest" "Closing the application ..." "pgx/start.sh"
+run_test "rr" "clusterAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
-# run_test "rr" "topologyAwareRRTest" "Closing the application ..." "pgx/start.sh"
+run_test "rr" "topologyAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
 cd ../../..
 
