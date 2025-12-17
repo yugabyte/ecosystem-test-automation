@@ -88,13 +88,12 @@ echo "Executing start-ybdb.sh ...\n"
 if [ -d "$DIR2" ]; then
  echo "pgx repository is already present"
  cd pgx
- git checkout falky-tests
+ git checkout master
  git pull
 else
  echo "Cloning the pgx repository"
  git clone git@github.com:yugabyte/pgx.git
  cd pgx
- git checkout falky-tests
 fi
 
 echo "Running upstream tests"
