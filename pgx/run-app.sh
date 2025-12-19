@@ -112,7 +112,7 @@ if grep "FAIL:" "pgx-tests.log"; then
   grep -B 1 "FAIL:" pgx-tests.log > stack4json.log
   # test_name=`sed -n '/^.*FAIL:\s\+\(\w\+\).*$/s//\1/p' pgx-tests.log`
   python $WORKSPACE/integrations/utils/create_json.py --test_name "NA" --script_name "pgx-test" --result FAILED --file_path stack4json.log >> ../temp_report.json
-  RESULT=1
+  OVERALL_STATUS=1
 else
   python $WORKSPACE/integrations/utils/create_json.py --test_name "NA" --script_name "pgx-test" --result PASSED >> ../temp_report.json
 fi
