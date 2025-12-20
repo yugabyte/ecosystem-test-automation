@@ -16,12 +16,15 @@ printf "which pythons\n"
 which python
 which python3
 which python3.8
-which python3.9
-which python3.12
+# which python3.9
+# which python3.12
 python --version
+python3 --version
+/usr/bin/python --version
+/usr/bin/python3 --version
 printf "PATH:\n"
 echo $PATH
-
+sudo update-alternatives --list | grep python
 printf "\nPython check done\n"
 
 # Start the run
