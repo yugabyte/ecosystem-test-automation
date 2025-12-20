@@ -24,7 +24,16 @@ python3 --version
 /usr/bin/python3 --version
 printf "PATH:\n"
 echo $PATH
+sudo update-alternatives --display python
+printf "listing python\n"
 sudo update-alternatives --list | grep python
+printf "Linking python3.11\n"
+sudo update-alternatives --install /usr/local/bin/python python /usr/bin/python3.11 5
+printf "Setting python3.11\n"
+sudo update-alternatives --set python /usr/bin/python3.11
+sudo update-alternatives --list | grep python
+python --version
+sudo update-alternatives --display python
 printf "\nPython check done\n"
 
 # Start the run
