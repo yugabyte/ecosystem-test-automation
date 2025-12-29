@@ -2,4 +2,5 @@
 set -e
 
 # Start YugabyteDB
-$YUGABYTE_HOME_DIRECTORY/bin/yb-ctl create
+echo "Starting YugabyteDB with connection manager ..."
+$YUGABYTE_HOME_DIRECTORY/bin/yugabyted start --advertise_address=127.0.0.1 --tserver_flags "enable_ysql_conn_mgr=true,allowed_preview_flags_csv=enable_ysql_conn_mgr" --ui false
