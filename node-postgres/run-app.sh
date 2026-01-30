@@ -20,12 +20,14 @@ OVERALL_STATUS=0
 if [ -d "$DIR" ]; then
  echo "driver-examples repository is already present"
  cd driver-examples
- git checkout main
+ git checkout jenkins-fixes-yb-ctl
  git pull
 else
  echo "Cloning the driver examples repository"
  git clone git@github.com:yugabyte/driver-examples.git
  cd driver-examples
+ git checkout jenkins-fixes-yb-ctl
+ git pull
 fi
 
 # Function to run individual test cases and capture their results

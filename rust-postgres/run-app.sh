@@ -26,12 +26,14 @@ run_test() {
 if [ -d "$DIR" ]; then
  echo "driver-examples repository is already present"
  cd driver-examples
- git checkout main
+ git checkout rust-tests
  git pull
 else
  echo "Cloning the driver examples repository"
  git clone git@github.com:yugabyte/driver-examples.git
  cd driver-examples
+ git checkout rust-tests
+ git pull
 fi
 
 cd rust/rust_ysql
@@ -60,6 +62,8 @@ run_test "ybsql_fallback_example3" "rust-postgres/start.sh"
 run_test "ulb_multithread" "rust-postgres/start.sh"
 
 run_test "talb_multithread" "rust-postgres/start.sh"
+
+run_test "ybsql_calb_rr" "rust-postgres/start.sh"
 
 # Finalize the JSON report
 sed -i '$ s/,$//' temp_report.json # Remove trailing comma from the last JSON object
