@@ -81,7 +81,7 @@ run_test "rr" "clusterAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
 run_test "rr" "topologyAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
-run_test " " "multipool" "Closing the application ..." "pgx/start.sh"
+run_test "multipool" "" "Closing the multi-pool application ..." "pgx/start.sh"
 
 cd ../../..
 
