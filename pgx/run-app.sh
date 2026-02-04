@@ -24,7 +24,10 @@ run_test() {
         ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY --pool 2>&1 | tee ${test_name}_${tc_name}.log
     else
         echo "Running ${test_name}_${tc_name} from $script_name..."
-        ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY "--$test_name" "$tc_name" 2>&1 | tee ${test_name}_${tc_name}.log
+        if [ $tc_name == "multipool" ]; then
+            ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY "--$test_name" 2>&1 | tee ${test_name}_${tc_name}.log
+        else
+            ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY "--$test_name" "$tc_name" 2>&1 | tee ${test_name}_${tc_name}.log
     fi
     if ! grep "$message" ${test_name}_${tc_name}.log; then
       tail -n 30 ${test_name}_${tc_name}.log > stack4json.log
@@ -81,7 +84,7 @@ run_test "rr" "clusterAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
 run_test "rr" "topologyAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
-run_test "multipool" "" "Closing the multi-pool application ..." "pgx/start.sh"
+run_test "multipool" "multipool" "Closing the multi-pool application ..." "pgx/start.sh"
 
 cd ../../..
 
