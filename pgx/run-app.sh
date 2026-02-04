@@ -28,6 +28,7 @@ run_test() {
             ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY "--$test_name" 2>&1 | tee ${test_name}_${tc_name}.log
         else
             ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY "--$test_name" "$tc_name" 2>&1 | tee ${test_name}_${tc_name}.log
+        fi
     fi
     if ! grep "$message" ${test_name}_${tc_name}.log; then
       tail -n 30 ${test_name}_${tc_name}.log > stack4json.log
