@@ -12,7 +12,7 @@ else
 fi
 
 cd $DIR
-git checkout main
+git checkout ruby-pg-test-fixes
 git pull
 cd ruby/ysql
 
