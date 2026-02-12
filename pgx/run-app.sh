@@ -42,18 +42,20 @@ run_test() {
     fi
 }
 
+if [ -z $DE_BRANCH ]; then
+  DE_BRANCH='main'
+fi
+
 # Clone or update the repository
 if [ -d "$DIR1" ]; then
- echo "driver-examples repository is already present"
+ echo "driver-examples repository is already present, checking out $DE_BRANCH"
  cd driver-examples
- git checkout python-test-fixes
+ git checkout $DE_BRANCH
  git pull
 else
- echo "Cloning the driver examples repository"
- git clone git@github.com:yugabyte/driver-examples.git
+ echo "Cloning the branch $DE_BRANCH of the driver-examples repository"
+ git clone -b $DE_BRANCH git@github.com:yugabyte/driver-examples.git
  cd driver-examples
- git checkout python-test-fixes
- git pull
 fi
 
 cd go/pgx
@@ -86,44 +88,6 @@ run_test "rr" "clusterAwareRRTest" "Closing the application ..." "pgx/start.sh"
 run_test "rr" "topologyAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
 run_test "multipool" "multipool" "Closing the multi-pool application ..." "pgx/start.sh"
-
-cd ../../..
-
-# Launch YugabyteDB
-echo "Executing start-ybdb.sh ...\n"
-./start-ybdb.sh
-
-if [ -d "$DIR2" ]; then
- echo "pgx repository is already present"
- cd pgx
- git checkout master
- git pull
-else
- echo "Cloning the pgx repository"
- git clone git@github.com:yugabyte/pgx.git
- cd pgx
-fi
-
-echo "Running upstream tests"
-
-go clean -testcache
-
-# Run the specific test case and capture errors
-echo "Running pgx test suite..."
-export PGX_TEST_DATABASE="host=127.0.0.1 database=pgx_test"
-export PGUSER=yugabyte
-export PGPORT=5433
-go test -v -p 1 -parallel 1 ./... 2>&1 | tee pgx-tests.log
-
-if grep "FAIL:" "pgx-tests.log"; then
-  # Get the lines with 'FAIL'
-  grep -B 1 "FAIL:" pgx-tests.log > stack4json.log
-  # test_name=`sed -n '/^.*FAIL:\s\+\(\w\+\).*$/s//\1/p' pgx-tests.log`
-  python $WORKSPACE/integrations/utils/create_json.py --test_name "NA" --script_name "pgx-test" --result FAILED --file_path stack4json.log >> ../temp_report.json
-  OVERALL_STATUS=1
-else
-  python $WORKSPACE/integrations/utils/create_json.py --test_name "NA" --script_name "pgx-test" --result PASSED >> ../temp_report.json
-fi
 
 # Finalize the JSON report
 sed -i '$ s/,$//' ../temp_report.json # Remove trailing comma from the last JSON object

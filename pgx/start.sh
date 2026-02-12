@@ -8,7 +8,7 @@ CURRENT_DIR_PATH=`realpath $CURRENT_DIR`
 
 cd $CURRENT_DIR_PATH
 
-./do-start.sh
+./do-start.sh $1
 SUCCESS="$?"
 
 # Tear down the setup
