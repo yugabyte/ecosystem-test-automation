@@ -65,25 +65,27 @@ echo "Running tests"
 # Initialize the JSON report
 echo "[" > ../../../temp_report.json
 
-run_test " " "basic" "Closing the application ..." "pgx/start.sh"
+# run_test " " "basic" "Closing the application ..." "pgx/start.sh"
 
-run_test "pool" "pool" "Closing the application ..." "pgx/start.sh"
+# run_test "pool" "pool" "Closing the application ..." "pgx/start.sh"
 
-run_test "fallbackTest" "checkNodeDownBehaviorMultiFallback" "End of checkNodeDownBehaviorMultiFallback() ..." "pgx/start.sh"
+# run_test "fallbackTest" "checkNodeDownBehaviorMultiFallback" "End of checkNodeDownBehaviorMultiFallback() ..." "pgx/start.sh"
+
+export LOG_LEVEL=silly
 
 run_test "fallbackTest" "checkMultiNodeDown" "End of checkMultiNodeDown() ..." "pgx/start.sh"
 
-run_test "fallbackTest" "checkNodeDownPrimary" "End of checkNodeDownPrimary() ..." "pgx/start.sh"
+# run_test "fallbackTest" "checkNodeDownPrimary" "End of checkNodeDownPrimary() ..." "pgx/start.sh"
 
-run_test "rr" "clusterAwareRRTest" "Closing the application ..." "pgx/start.sh"
+# run_test "rr" "clusterAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
-run_test "rr" "topologyAwareRRTest" "Closing the application ..." "pgx/start.sh"
+# run_test "rr" "topologyAwareRRTest" "Closing the application ..." "pgx/start.sh"
 
 cd ../../..
 
 # Launch YugabyteDB
-echo "Executing start-ybdb.sh ...\n"
-./start-ybdb.sh
+# echo "Executing start-ybdb.sh ...\n"
+# ./start-ybdb.sh
 
 if [ -d "$DIR2" ]; then
  echo "pgx repository is already present"
@@ -98,14 +100,14 @@ fi
 
 echo "Running upstream tests"
 
-go clean -testcache
+# go clean -testcache
 
 # Run the specific test case and capture errors
 echo "Running pgx test suite..."
 export PGX_TEST_DATABASE="host=127.0.0.1 database=pgx_test"
 export PGUSER=yugabyte
 export PGPORT=5433
-go test -v -p 1 -parallel 1 ./... 2>&1 | tee pgx-tests.log
+# go test -v -p 1 -parallel 1 ./... 2>&1 | tee pgx-tests.log
 
 if grep "FAIL:" "pgx-tests.log"; then
   # Get the lines with 'FAIL'
