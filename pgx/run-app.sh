@@ -17,14 +17,14 @@ run_test() {
     if [ $tc_name == "basic" ]; then
         test_name="load_balance"
         echo "Running ybsql_load_balance from $script_name..."
-        ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY 2>&1 | tee ${test_name}_${tc_name}.log
+        LOG_LEVEL=silly ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY 2>&1 | tee ${test_name}_${tc_name}.log
     elif [ $tc_name == "pool" ]; then
         tc_name="test"
         echo "Running pool example from $script_name..."
-        ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY --pool 2>&1 | tee ${test_name}_${tc_name}.log
+        LOG_LEVEL=silly ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY --pool 2>&1 | tee ${test_name}_${tc_name}.log
     else
         echo "Running ${test_name}_${tc_name} from $script_name..."
-        ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY "--$test_name" "$tc_name" 2>&1 | tee ${test_name}_${tc_name}.log
+        LOG_LEVEL=silly ./ybsql_load_balance $YUGABYTE_HOME_DIRECTORY "--$test_name" "$tc_name" 2>&1 | tee ${test_name}_${tc_name}.log
     fi
     if ! grep "$message" ${test_name}_${tc_name}.log; then
       tail -n 30 ${test_name}_${tc_name}.log > stack4json.log
