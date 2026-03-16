@@ -13,7 +13,7 @@ pushd $CURRENT_DIR_PATH
 
 # Launch YugabyteDB
 printf "Executing start-ybdb.sh ...\n"
-. ./start-ybdb.sh
+. ENABLE_CM=$ENABLE_CM ./start-ybdb.sh
 
 # Start the test/example application and generate reports
 printf "Executing run-app.sh ...\n"

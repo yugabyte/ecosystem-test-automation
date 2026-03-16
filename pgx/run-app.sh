@@ -6,6 +6,8 @@ DIR2="pgx"
 REPORT_FILE="$WORKSPACE/artifacts/test_report_pgx.json"
 OVERALL_STATUS=0
 
+export ENABLE_CM=$ENABLE_CM
+
 # Function to run individual test cases and capture their results
 run_test() {
     local test_name=$1
