@@ -17,6 +17,7 @@ git pull
 cd ruby/ysql
 
 export YBDB_PATH=$YUGABYTE_HOME_DIRECTORY
+export ENABLE_CM=$ENABLE_CM
 
 $YBDB_PATH/bin/yugabyted destroy
 $YBDB_PATH/bin/yb-ctl destroy

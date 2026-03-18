@@ -26,6 +26,7 @@ else
  echo "Cloning the driver examples repository"
  git clone git@github.com:yugabyte/driver-examples.git
  cd driver-examples
+ git checkout main
 fi
 
 # Function to run individual test cases and capture their results
@@ -58,6 +59,7 @@ npm install
 echo "Exporting environment variable YB_PATH with the value of the path of the YugabyteDB installation directory."
 
 export YB_PATH="$YUGABYTE_HOME_DIRECTORY"
+export ENABLE_CM="$ENABLE_CM"
 
 echo "Exporting log level."
 

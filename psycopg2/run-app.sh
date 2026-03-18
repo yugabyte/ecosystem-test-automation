@@ -44,6 +44,7 @@ pip install psycopg2-yugabytedb
 pip install psutil
 
 export YB_PATH=$YUGABYTE_HOME_DIRECTORY
+export ENABLE_CM=$ENABLE_CM
 
 echo "Running tests"
 

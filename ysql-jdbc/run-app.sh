@@ -15,6 +15,7 @@ if [ -d "$DIR" ]; then
 else
   echo "Cloning the driver-examples repository ..."
   git clone git@github.com:yugabyte/driver-examples.git && cd driver-examples
+  git checkout main
 fi
 
 cd java/ysql-jdbc
@@ -32,7 +33,7 @@ run_test() {
 
     # Run the specific test case and capture errors
     local tname=${test_name%.main}
-    YBDB_PATH=$YUGABYTE_HOME_DIRECTORY mvn exec:java -Dexec.mainClass=com.yugabyte.ysql.${tname} --no-transfer-progress 2>&1 | tee ${test_name}.log
+    ENABLE_CM=$ENABLE_CM YBDB_PATH=$YUGABYTE_HOME_DIRECTORY mvn exec:java -Dexec.mainClass=com.yugabyte.ysql.${tname} --no-transfer-progress 2>&1 | tee ${test_name}.log
     if ! grep "BUILD SUCCESS" ${test_name}.log; then
       # Get the lines between '[WARNING]' and 'BUILD FAILURE' which is the stack trace
       sed -n '/\[WARNING\]/,/BUILD FAILURE/{/\[WARNING\]/b;/BUILD FAILURE/b;p}' ${test_name}.log > stack4json.log

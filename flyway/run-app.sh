@@ -18,6 +18,7 @@ git pull
 echo "Building and running the tests..."
 
 export YBDB_PATH=$YUGABYTE_HOME_DIRECTORY
+export ENABLE_CM=$ENABLE_CM
 export JAVA_HOME=/usr/lib/jvm/zulu-17.jdk
 
 # Function to run individual test cases and capture their results
