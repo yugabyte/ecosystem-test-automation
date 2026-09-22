@@ -30,14 +30,19 @@ else
 fi
 
 # Function to run individual test cases and capture their results
+# Usage: run_test <test_name> <script_name> [run_command] [success_marker]
+# run_command defaults to running <test_name>.js with node, and success_marker
+# defaults to the "Test Completed" message printed by those tests.
 run_test() {
     local test_name=$1
     local script_name=$2
+    local run_command=${3:-"node $test_name.js"}
+    local success_marker=${4:-"Test Completed"}
     echo "Running $test_name from $script_name..."
 
     # Run the specific test case and capture errors
-    node "$test_name.js"  2>&1 | tee ${test_name}.log
-    if ! grep "Test Completed" ${test_name}.log; then
+    eval "$run_command" 2>&1 | tee ${test_name}.log
+    if ! grep "$success_marker" ${test_name}.log; then
       if grep "Verification failed:" ${test_name}.log; then
          # Get the lines after 'Verification failed:' which is the stack trace
         sed -n '/Verification failed:/,$p' "${test_name}.log" > stack4json.log
@@ -97,6 +102,24 @@ run_test "yb-pooling-with-topology-aware" "node-postgres/start.sh"
 run_test "yb-topology-aware-with-add-node" "node-postgres/start.sh"
 
 run_test "yb-topology-aware-with-stop-node" "node-postgres/start.sh"
+
+# The Prisma ORM example lives in its own package and is written in TypeScript,
+# so it needs its own dependencies and a generated Prisma client before it runs.
+echo "Installing prisma-orm example dependencies"
+pushd prisma-orm > /dev/null
+npm install
+npx prisma generate
+popd > /dev/null
+
+# DATABASE_URL lives in the example's .env, which only the Prisma CLI picks up
+# automatically. Export it so that it is available to the test process as well.
+set -a
+. ./prisma-orm/.env
+set +a
+echo "Using DATABASE_URL=$DATABASE_URL for the prisma-orm test"
+
+run_test "prisma-orm-yb-load-balance-test" "node-postgres/start.sh" \
+  "(cd prisma-orm && npx tsx yb-load-balance-test.ts)" "Warm-up complete."
 
 # Finalize the JSON report
 sed -i '$ s/,$//' temp_report.json # Remove trailing comma from the last JSON object
